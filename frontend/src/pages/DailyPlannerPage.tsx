@@ -7,7 +7,7 @@ import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
 import { farmApi } from '../services/farmApi';
-import { CalendarCheck, CheckCircle2, Circle, Droplets, SprayCan, Sprout, Plus, Sparkles, MapPin, Calendar, Layers } from 'lucide-react';
+import { CalendarCheck, CheckCircle2, Circle, Droplets, SprayCan, Sprout, Plus, Sparkles, MapPin, Calendar, Layers, Sun, Sunset, Sunrise } from 'lucide-react';
 
 export const DailyPlannerPage: React.FC = () => {
   const { tasks, fetchTasks, toggleTaskStatus } = usePlannerStore();
@@ -18,7 +18,7 @@ export const DailyPlannerPage: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [generating, setGenerating] = useState(false);
 
-  // Form parameters: Crop, Location, Soil, Area, Planting Date, Weather
+  // Form parameters
   const [crop, setCrop] = useState(user.cropGrowing || 'Paddy (Rice)');
   const [location, setLocation] = useState(user.district || 'Coimbatore');
   const [soil, setSoil] = useState(user.landType || 'Clay Loam');
@@ -33,7 +33,7 @@ export const DailyPlannerPage: React.FC = () => {
     e.preventDefault();
     setGenerating(true);
     try {
-      await farmApi.getPlannerTasks(); // Sync backend/Supabase
+      await farmApi.getPlannerTasks();
       await fetchTasks();
     } catch (err) {}
     setGenerating(false);
@@ -42,8 +42,11 @@ export const DailyPlannerPage: React.FC = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category.toLowerCase()) {
-      case 'irrigation': return <Droplets className="w-5 h-5 text-blue-600" />;
-      case 'pest control': return <SprayCan className="w-5 h-5 text-red-600" />;
+      case 'irrigation':
+      case 'afternoon': return <Droplets className="w-5 h-5 text-blue-600" />;
+      case 'pest control':
+      case 'evening': return <SprayCan className="w-5 h-5 text-purple-600" />;
+      case 'morning': return <Sunrise className="w-5 h-5 text-amber-600" />;
       default: return <Sprout className="w-5 h-5 text-emerald-600" />;
     }
   };
@@ -58,7 +61,7 @@ export const DailyPlannerPage: React.FC = () => {
             <CalendarCheck className="w-7 h-7 text-teal-600" />
             <span>{t.dailyPlanner}</span>
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">Generate AI personalized crop schedules & track daily field operations</p>
+          <p className="text-xs text-slate-500 mt-0.5">Automated Daily Farm Schedule (Morning, Afternoon, Evening) & Timeline</p>
         </div>
         <div className="flex items-center space-x-3">
           <Badge variant="success">
@@ -70,6 +73,43 @@ export const DailyPlannerPage: React.FC = () => {
           </Button>
         </div>
       </div>
+
+      {/* DAILY FARM SCHEDULE BANNER */}
+      <Card className="p-6 bg-gradient-to-r from-emerald-900 to-[#1E3A2B] text-white space-y-4 rounded-3xl shadow-xl">
+        <div className="flex items-center justify-between border-b border-emerald-700/60 pb-3">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-amber-400" />
+            <h2 className="text-lg font-black tracking-wide">Daily Automated Farm Schedule ({crop})</h2>
+          </div>
+          <Badge variant="success">Rule Engine Active</Badge>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-1">
+          <div className="bg-white/10 p-4 rounded-2xl border border-white/10 space-y-1">
+            <div className="flex items-center gap-2 text-amber-300 font-bold text-xs uppercase">
+              <Sunrise className="w-4 h-4" />
+              <span>Morning</span>
+            </div>
+            <p className="text-sm font-semibold text-white">Inspect leaves for pests and check standing water level.</p>
+          </div>
+
+          <div className="bg-white/10 p-4 rounded-2xl border border-white/10 space-y-1">
+            <div className="flex items-center gap-2 text-blue-300 font-bold text-xs uppercase">
+              <Sun className="w-4 h-4" />
+              <span>Afternoon</span>
+            </div>
+            <p className="text-sm font-semibold text-white">Irrigate 30 to 45 minutes; ensure no water stagnation.</p>
+          </div>
+
+          <div className="bg-white/10 p-4 rounded-2xl border border-white/10 space-y-1">
+            <div className="flex items-center gap-2 text-purple-300 font-bold text-xs uppercase">
+              <Sunset className="w-4 h-4" />
+              <span>Evening</span>
+            </div>
+            <p className="text-sm font-semibold text-white">Spray organic Neem oil (5ml/L) or Panchagavya 3%.</p>
+          </div>
+        </div>
+      </Card>
 
       {/* PLANNER GENERATION FORM */}
       {showForm && (
@@ -184,7 +224,7 @@ export const DailyPlannerPage: React.FC = () => {
                       <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">{task.category}</span>
                       <span className="text-xs font-bold text-emerald-700">({task.crop_name})</span>
                     </div>
-                    <Badge variant={isDone ? 'success' : 'warning'}>{task.task_date}</Badge>
+                    <Badge variant={isDone ? 'success' : 'warning'}>{task.task_date || 'Today'}</Badge>
                   </div>
 
                   <h3 className={`text-base font-bold ${isDone ? 'line-through text-slate-400' : 'text-[#1E3A2B]'}`}>

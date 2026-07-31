@@ -21,7 +21,7 @@ class GeminiService:
             return None
 
     @staticmethod
-    async def generate_farming_advice(prompt: string, crop: str = "General", language: str = "en") -> dict:
+    async def generate_farming_advice(prompt: str, crop: str = "General", language: str = "en") -> dict:
         """
         Generates structured AI advisory with mandatory fields:
         Recommendation, Reason, Precaution, Next Action
@@ -71,9 +71,24 @@ class GeminiService:
     @staticmethod
     async def analyze_disease_image(image_bytes: bytes, crop_name: str = "Crop") -> dict:
         """
-        Analyzes crop image using Gemini Vision model or smart vision heuristic.
-        Returns: Disease, Confidence, Organic Treatment, Chemical Treatment, Precaution, Next Action
+        Analyzes crop image using Gemini Vision model.
+        If no image uploaded: Prompts user to upload image.
+        If Gemini Vision unavailable: Uses heuristic fallback without hallucinating.
         """
+        if not image_bytes or len(image_bytes) == 0:
+            return {
+                "status": "error",
+                "message": "Please upload a crop image to analyze disease.",
+                "disease_detected": None,
+                "confidence": 0,
+                "severity": "None",
+                "symptoms": [],
+                "organic_treatment": [],
+                "chemical_treatment": [],
+                "precaution": "",
+                "next_action": ""
+            }
+
         try:
             if settings.GEMINI_API_KEY:
                 model = genai.GenerativeModel('gemini-1.5-flash')
@@ -89,29 +104,25 @@ class GeminiService:
                 if response and response.text:
                     clean_text = response.text.replace("```json", "").replace("```", "").strip()
                     parsed = json.loads(clean_text)
+                    parsed["status"] = "success"
                     return parsed
         except Exception as e:
             logger.warning(f"Gemini Vision failed or no key: {e}")
 
-        # Production fallback response
+        # Fallback when Gemini vision is unavailable
         return {
-            "disease_detected": f"{crop_name} Leaf Spot / Blight Symptoms",
-            "confidence": 0.94,
-            "severity": "Moderate",
+            "status": "unavailable",
+            "message": "Image analysis unavailable. Please try again.",
+            "disease_detected": "Image Analysis Unavailable",
+            "confidence": 0.0,
+            "severity": "None",
             "symptoms": [
-                "Discolored spots with yellowish halos on leaves",
-                "Partial drying of lower leaf margins"
+                "Image analysis unavailable. Please try again."
             ],
-            "organic_treatment": [
-                "Spray Pseudomonas fluorescens @ 10g/L water early morning",
-                "Apply Neem oil (5ml/L) with soap solution"
-            ],
-            "chemical_treatment": [
-                "Spray Copper Oxychloride 50% WP @ 2.5g/L water",
-                "Alternate with Mancozeb 75% WP @ 2g/L"
-            ],
-            "precaution": "Avoid excess nitrogen fertilizer during humid overcast conditions.",
-            "next_action": "Isolate heavily affected leaves and ensure morning sunlight aeration."
+            "organic_treatment": [],
+            "chemical_treatment": [],
+            "precaution": "Please ensure you have an active network connection or valid Gemini API key.",
+            "next_action": "Try uploading a clear, well-lit image again."
         }
 
     @staticmethod

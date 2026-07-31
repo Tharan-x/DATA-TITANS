@@ -67,6 +67,98 @@ export const farmApi = {
     };
   },
 
+  async getCropGuides(): Promise<CropGuideItem[]> {
+    try {
+      const res = await apiClient.get('/crop-guide');
+      if (res.data?.crops && res.data.crops.length > 0) return res.data.crops;
+    } catch (e) {}
+
+    try {
+      const { data } = await supabase.from('crop_guides').select('*');
+      if (data && data.length > 0) return data;
+    } catch (e) {}
+
+    return [
+      {
+        id: 'crop-1',
+        name: 'Paddy (Rice / நெல்)',
+        category: 'Cereals',
+        duration_days: 120,
+        optimal_temp: '20°C - 35°C',
+        optimal_ph: '5.5 - 6.5',
+        ideal_season: 'Kharif / Samba (June - Nov)',
+        water_requirement: '1200 - 1400 mm (High)',
+        stages: [
+          { stage_name: 'Nursery & Sowing', days: 'Day 1 - 25', advisory: 'Prepare nursery bed. Seed rate: 20-25kg/acre. Treat seeds with Pseudomonas fluorescens (10g/kg). Soil: Clay Loam (pH 5.5-6.5).', water_need: 'Moderate' },
+          { stage_name: 'Transplanting & Tillering', days: 'Day 26 - 60', advisory: 'Transplant 2-3 seedlings per hill. Apply Neem coated Urea (100kg/acre), DAP (50kg), MOP (40kg). Maintain 5cm water level.', water_need: 'High' },
+          { stage_name: 'Panicle Initiation & Flowering', days: 'Day 61 - 90', advisory: 'Critical water requirement stage. Monitor for Yellow Stem Borer & Leaf Blast.', water_need: 'Very High' },
+          { stage_name: 'Ripening & Harvest', days: 'Day 91 - 120', advisory: 'Harvest at 110-130 days when 80% grains turn golden yellow. Expected yield: 2.5 - 3.5 Tons/acre.', water_need: 'Low' }
+        ]
+      },
+      {
+        id: 'crop-2',
+        name: 'Tomato (தக்காளி)',
+        category: 'Vegetables',
+        duration_days: 100,
+        optimal_temp: '18°C - 30°C',
+        optimal_ph: '6.0 - 7.0',
+        ideal_season: 'Rabi / Winter (Oct - Mar)',
+        water_requirement: '600 - 800 mm (Medium)',
+        stages: [
+          { stage_name: 'Seedling Nursery', days: 'Day 1 - 30', advisory: 'Sow 100-150g seeds/acre in pro-trays filled with vermicompost.', water_need: 'Light' },
+          { stage_name: 'Transplanting & Staking', days: 'Day 31 - 60', advisory: 'Transplant at 60x45cm spacing in sandy loam soil. Apply NPK 19:19:19 and Calcium Nitrate.', water_need: 'Moderate' },
+          { stage_name: 'Flowering & Fruiting', days: 'Day 61 - 90', advisory: 'Monitor for Early Blight and Fruit Borer. Drip irrigate every 3-4 days.', water_need: 'High' },
+          { stage_name: 'Harvesting', days: 'Day 91 - 110', advisory: 'Harvest at pink breaker stage. Expected yield: 12 - 18 Tons/acre.', water_need: 'Moderate' }
+        ]
+      },
+      {
+        id: 'crop-3',
+        name: 'Cotton (பருத்தி)',
+        category: 'Fiber',
+        duration_days: 165,
+        optimal_temp: '21°C - 35°C',
+        optimal_ph: '6.0 - 8.0',
+        ideal_season: 'Kharif (May - Sept)',
+        water_requirement: '700 - 1000 mm',
+        stages: [
+          { stage_name: 'Sowing & Germination', days: 'Day 1 - 35', advisory: 'Sow 1.5-2kg BG-II hybrid seeds/acre in deep black cotton soil.', water_need: 'Moderate' },
+          { stage_name: 'Vegetative & Square Formation', days: 'Day 36 - 90', advisory: 'Apply Urea (80kg/acre), SSP (150kg/acre), MOP (40kg/acre). Install pheromone traps.', water_need: 'High' },
+          { stage_name: 'Boll Formation & Harvest', days: 'Day 91 - 165', advisory: 'Monitor for Pink Bollworm. Harvest in 3-4 hand-picking passes. Expected yield: 1.2 - 1.8 Tons/acre.', water_need: 'Moderate' }
+        ]
+      },
+      {
+        id: 'crop-4',
+        name: 'Banana (வாழை)',
+        category: 'Fruit',
+        duration_days: 360,
+        optimal_temp: '15°C - 38°C',
+        optimal_ph: '6.5 - 7.5',
+        ideal_season: 'Year-round (Best Feb-Mar)',
+        water_requirement: '1500 - 2000 mm (High)',
+        stages: [
+          { stage_name: 'Planting & Vegetative', days: 'Day 1 - 120', advisory: 'Plant 1000 suckers/acre in fertile clay loam soil. Apply Potash 300g/plant and Neem Cake.', water_need: 'High' },
+          { stage_name: 'Shooting & Bunch Formation', days: 'Day 121 - 270', advisory: 'Support heavy bunches with bamboo poles. Spray Pseudomonas against Sigatoka Leaf Spot.', water_need: 'Very High' },
+          { stage_name: 'Maturation & Harvest', days: 'Day 271 - 360', advisory: 'Harvest when bunch fingers become rounded. Expected yield: 25 - 35 Tons/acre.', water_need: 'Moderate' }
+        ]
+      },
+      {
+        id: 'crop-5',
+        name: 'Maize (Corn / மக்காச்சோளம்)',
+        category: 'Cereals',
+        duration_days: 105,
+        optimal_temp: '18°C - 32°C',
+        optimal_ph: '6.5 - 7.5',
+        ideal_season: 'Kharif & Rabi',
+        water_requirement: '500 - 650 mm',
+        stages: [
+          { stage_name: 'Sowing & Germination', days: 'Day 1 - 25', advisory: 'Sow 7-8kg seeds/acre in fertile loamy soil.', water_need: 'Moderate' },
+          { stage_name: 'Tasseling & Silking', days: 'Day 26 - 70', advisory: 'Critical irrigation stage. Apply Urea (90kg/acre), DAP (60kg), MOP (30kg). Monitor Fall Armyworm.', water_need: 'High' },
+          { stage_name: 'Grain Filling & Harvest', days: 'Day 71 - 105', advisory: 'Harvest when husk turns yellow-brown. Expected yield: 3.0 - 4.0 Tons/acre.', water_need: 'Low' }
+        ]
+      }
+    ];
+  },
+
   async getMarketPrices(commodity?: string): Promise<CommodityPrice[]> {
     try {
       const res = await apiClient.get('/market-prices', { params: { commodity } });
@@ -262,7 +354,7 @@ export const farmApi = {
   async getOfflineTips(): Promise<KnowledgeCard[]> {
     try {
       const res = await apiClient.get('/offline-tips');
-      if (res.data?.cards) {
+      if (res.data?.cards && res.data.cards.length > 0) {
         StorageService.cacheData(StorageService.KEYS.OFFLINE_CARDS, res.data.cards);
         return res.data.cards;
       }
@@ -277,7 +369,84 @@ export const farmApi = {
     } catch (e) {}
 
     const cached = StorageService.getCachedData<KnowledgeCard[]>(StorageService.KEYS.OFFLINE_CARDS);
-    return cached || [
+    if (cached && cached.length > 0) return cached;
+
+    return [
+      {
+        id: 'card-rice',
+        category: 'Rice (Paddy)',
+        title: { en: 'Paddy / Rice Complete Guide', ta: 'நெல் சாகுபடி வழிகாட்டி' },
+        summary: { en: 'Best Season: Kharif / Samba. Water: 1200-1400mm. Soil: Clay Loam (pH 5.5 - 6.5).' },
+        actionable_steps: [
+          'Best Season: Kharif / Samba (June - November)',
+          'Water Requirement: 1200 - 1400 mm (High standing water 5cm)',
+          'Fertilizer: Neem Coated Urea (100kg/acre), DAP (50kg/acre), MOP (40kg/acre)',
+          'Soil: Clay loam, alluvial soil with pH 5.5 - 6.5',
+          'Pest & Disease: Yellow Stem Borer, Paddy Leaf Blast, Sheath Blight',
+          'Harvest: 110 - 130 days after sowing'
+        ],
+        icon_name: 'Sprout'
+      },
+      {
+        id: 'card-tomato',
+        category: 'Tomato',
+        title: { en: 'Tomato Cultivation Guide', ta: 'தக்காளி சாகுபடி வழிகாட்டி' },
+        summary: { en: 'Best Season: Rabi / Winter. Water: 600-800mm. Soil: Sandy Loam (pH 6.0 - 7.0).' },
+        actionable_steps: [
+          'Best Season: Rabi / Winter (October - March)',
+          'Water Requirement: 600 - 800 mm (Drip irrigation every 3-4 days)',
+          'Fertilizer: Vermicompost 2T/acre, NPK 19:19:19 (5kg/acre), Calcium Nitrate',
+          'Soil: Well-drained sandy loam rich in organic matter (pH 6.0 - 7.0)',
+          'Pest & Disease: Fruit Borer, Early Blight, Tomato Leaf Curl Virus',
+          'Harvest: 90 - 110 days after transplanting'
+        ],
+        icon_name: 'Sprout'
+      },
+      {
+        id: 'card-cotton',
+        category: 'Cotton',
+        title: { en: 'Cotton Crop Guide', ta: 'பருத்தி சாகுபடி வழிகாட்டி' },
+        summary: { en: 'Best Season: Kharif. Water: 700-1000mm. Soil: Deep Black Cotton Soil (pH 6.0 - 8.0).' },
+        actionable_steps: [
+          'Best Season: Kharif (May - September)',
+          'Water Requirement: 700 - 1000 mm (Critical at boll formation)',
+          'Fertilizer: Urea (80kg/acre), SSP (150kg/acre), MOP (40kg/acre)',
+          'Soil: Deep black cotton soil or well-drained loams (pH 6.0 - 8.0)',
+          'Pest & Disease: Pink Bollworm, Fusarium Wilt, Alternaria Leaf Spot',
+          'Harvest: 150 - 180 days (3-4 hand-picking passes)'
+        ],
+        icon_name: 'Sprout'
+      },
+      {
+        id: 'card-banana',
+        category: 'Banana',
+        title: { en: 'Banana Farming Guide', ta: 'வாழை சாகுபடி வழிகாட்டி' },
+        summary: { en: 'Best Season: Year-round. Water: 1500-2000mm. Soil: Fertile Clay Loam (pH 6.5 - 7.5).' },
+        actionable_steps: [
+          'Best Season: Year-round (Best planting Feb-Mar or Nov-Dec)',
+          'Water Requirement: 1500 - 2000 mm (High regular moisture)',
+          'Fertilizer: Potash (300g/plant), Urea (200g/plant), Neem cake (1kg/plant)',
+          'Soil: Rich fertile alluvial or clay loam soil (pH 6.5 - 7.5)',
+          'Pest & Disease: Banana Stem Weevil, Sigatoka Leaf Spot, Panama Wilt',
+          'Harvest: 11 - 13 months (when bunch fingers become rounded)'
+        ],
+        icon_name: 'Sprout'
+      },
+      {
+        id: 'card-maize',
+        category: 'Maize',
+        title: { en: 'Maize (Corn) Farming Guide', ta: 'மக்காச்சோளம் சாகுபடி வழிகாட்டி' },
+        summary: { en: 'Best Season: Kharif & Rabi. Water: 500-650mm. Soil: Fertile Loam (pH 6.5 - 7.5).' },
+        actionable_steps: [
+          'Best Season: Kharif & Rabi (June-July & Oct-Nov)',
+          'Water Requirement: 500 - 650 mm (Critical at tasseling and silking)',
+          'Fertilizer: Urea (90kg/acre), DAP (60kg/acre), MOP (30kg/acre)',
+          'Soil: Well-drained fertile loamy soil (pH 6.5 - 7.5)',
+          'Pest & Disease: Fall Armyworm (FAW), Maydis Leaf Blight',
+          'Harvest: 90 - 115 days (when husk turns yellow-brown)'
+        ],
+        icon_name: 'Sprout'
+      },
       {
         id: 'card-01',
         category: 'Soil Health',

@@ -1,0 +1,57 @@
+{
+  "rice": {
+    "crop_name": "Paddy (Rice / நெல்)",
+    "suitable_season": "Kharif / Samba (June - November)",
+    "soil": "Clay loam, alluvial soil with pH 5.5 - 6.5",
+    "seed_rate": "20 - 25 kg/acre for direct broadcasting; 8 - 10 kg/acre for SRI method",
+    "water": "1200 - 1400 mm (Requires 5cm standing water during tillering & flowering)",
+    "fertilizer": "100kg Neem Coated Urea + 50kg DAP + 40kg MOP per acre (Split into 3 doses)",
+    "harvest_days": "110 - 130 days",
+    "common_diseases": "Paddy Leaf Blast, Sheath Blight, Yellow Stem Borer, Bacterial Leaf Streak",
+    "yield": "2.5 - 3.5 Tons / acre"
+  },
+  "tomato": {
+    "crop_name": "Tomato (தக்காளி)",
+    "suitable_season": "Rabi / Winter (October - March)",
+    "soil": "Well-drained sandy loam rich in organic matter (pH 6.0 - 7.0)",
+    "seed_rate": "100 - 150 grams/acre",
+    "water": "600 - 800 mm (Drip irrigation recommended every 3 days)",
+    "fertilizer": "Vermicompost 2T/acre, NPK 19:19:19 (5kg/acre), Calcium Nitrate (3kg/acre)",
+    "harvest_days": "90 - 110 days",
+    "common_diseases": "Early Blight, Late Blight, Tomato Leaf Curl Virus, Fruit Borer",
+    "yield": "12 - 18 Tons / acre"
+  },
+  "cotton": {
+    "crop_name": "Cotton (பருத்தி)",
+    "suitable_season": "Kharif (May - September)",
+    "soil": "Deep black cotton soil or well-drained loams (pH 6.0 - 8.0)",
+    "seed_rate": "1.5 - 2.0 kg/acre (Hybrid BG-II)",
+    "water": "700 - 1000 mm",
+    "fertilizer": "Urea 80kg/acre, SSP 150kg/acre, MOP 40kg/acre, Micronutrient spray",
+    "harvest_days": "150 - 180 days",
+    "common_diseases": "Pink Bollworm, Fusarium Wilt, Alternaria Leaf Spot",
+    "yield": "1.2 - 1.8 Tons / acre"
+  },
+  "banana": {
+    "crop_name": "Banana (வாழை)",
+    "suitable_season": "Year-round (Best Feb-Mar or Nov-Dec)",
+    "soil": "Rich fertile alluvial or clay loam soil (pH 6.5 - 7.5)",
+    "seed_rate": "1000 - 1200 suckers / acre (Spacing 1.8m x 1.8m)",
+    "water": "1500 - 2000 mm (High regular drip irrigation)",
+    "fertilizer": "Potash 300g/plant, Urea 200g/plant, Neem Cake 1kg/plant",
+    "harvest_days": "330 - 390 days (11 - 13 months)",
+    "common_diseases": "Sigatoka Leaf Spot, Panama Wilt (Fusarium), Stem Weevil",
+    "yield": "25 - 35 Tons / acre"
+  },
+  "maize": {
+    "crop_name": "Maize (Corn / மக்காச்சோளம்)",
+    "suitable_season": "Kharif & Rabi (June-July & Oct-Nov)",
+    "soil": "Well-drained fertile loamy soil rich in organic matter (pH 6.5 - 7.5)",
+    "seed_rate": "7 - 8 kg/acre",
+    "water": "500 - 650 mm (Critical at tasseling and silking)",
+    "fertilizer": "Urea 90kg/acre, DAP 60kg/acre, MOP 30kg/acre, Zinc Sulphate 10kg/acre",
+    "harvest_days": "90 - 115 days",
+    "common_diseases": "Fall Armyworm (FAW), Maydis Leaf Blight, Charcoal Rot",
+    "yield": "3.0 - 4.0 Tons / acre"
+  }
+}

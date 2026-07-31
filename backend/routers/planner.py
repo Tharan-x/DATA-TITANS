@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from typing import Optional
 from services.planner_service import PlannerService
@@ -25,6 +25,16 @@ async def get_planner_tasks(user_id: Optional[str] = None):
                 t["crop_name"] = p.get("crop_name", "Crop")
                 all_tasks.append(t)
     return {"status": "success", "tasks": all_tasks}
+
+@router.get("/daily-schedule")
+async def get_daily_schedule(
+    crop: str = Query(default="Paddy (Rice)"),
+    growth_stage: str = Query(default="Vegetative"),
+    weather: str = Query(default="Partly Cloudy")
+):
+    """Generate automatic Morning, Afternoon, Evening schedule using rule engine fallback."""
+    res = PlannerService.generate_daily_schedule(crop, growth_stage, weather)
+    return {"status": "success", "schedule": res["schedule"], "crop": crop, "growth_stage": growth_stage, "weather": weather}
 
 @router.post("")
 async def create_crop_planner(req: CreatePlannerRequest):

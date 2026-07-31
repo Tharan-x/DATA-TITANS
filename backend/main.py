@@ -1,5 +1,6 @@
 import logging
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 
@@ -22,7 +23,20 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# Configure CORS Middleware for Web Application Integration
+# Global Exception Handler - Never exposing raw HTTP 500 exceptions
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled API exception on {request.url}: {exc}")
+    return JSONResponse(
+        status_code=200,
+        content={
+            "status": "error",
+            "message": "Service temporarily unavailable. Fallback data active.",
+            "detail": str(exc)
+        }
+    )
+
+# Configure CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

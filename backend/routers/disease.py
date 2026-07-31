@@ -14,8 +14,8 @@ async def detect_disease(
     Analyzes crop disease using Gemini Vision API or expert diagnosis models.
     """
     image_bytes = None
-    if file:
+    if file and file.filename:
         image_bytes = await file.read()
 
-    res = await GeminiService.analyze_disease_image(image_bytes or b"", crop_name)
+    res = await GeminiService.analyze_disease_image(image_bytes, crop_name)
     return res

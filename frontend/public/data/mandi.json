@@ -1,0 +1,56 @@
+[
+  {
+    "id": "mandi-01",
+    "crop": "Paddy (Rice / Dhan)",
+    "district": "Madurai",
+    "todays_price": "₹2,350 / quintal",
+    "yesterdays_price": "₹2,280 / quintal",
+    "trend": "UP (+3.0%)",
+    "last_updated": "Today, 08:30 AM (Offline Data)"
+  },
+  {
+    "id": "mandi-02",
+    "crop": "Tomato",
+    "district": "Chennai",
+    "todays_price": "₹3,800 / quintal",
+    "yesterdays_price": "₹3,650 / quintal",
+    "trend": "UP (+4.1%)",
+    "last_updated": "Today, 09:15 AM (Offline Data)"
+  },
+  {
+    "id": "mandi-03",
+    "crop": "Small Onion (Shallots)",
+    "district": "Dindigul",
+    "todays_price": "₹5,400 / quintal",
+    "yesterdays_price": "₹5,400 / quintal",
+    "trend": "STABLE (0.0%)",
+    "last_updated": "Today, 07:45 AM (Offline Data)"
+  },
+  {
+    "id": "mandi-04",
+    "crop": "Cotton",
+    "district": "Coimbatore",
+    "todays_price": "₹7,200 / quintal",
+    "yesterdays_price": "₹7,350 / quintal",
+    "trend": "DOWN (-2.0%)",
+    "last_updated": "Today, 09:00 AM (Offline Data)"
+  },
+  {
+    "id": "mandi-05",
+    "crop": "Banana (Grand Naine)",
+    "district": "Tiruchirappalli",
+    "todays_price": "₹1,850 / quintal",
+    "yesterdays_price": "₹1,800 / quintal",
+    "trend": "UP (+2.7%)",
+    "last_updated": "Today, 08:00 AM (Offline Data)"
+  },
+  {
+    "id": "mandi-06",
+    "crop": "Maize",
+    "district": "Salem",
+    "todays_price": "₹2,150 / quintal",
+    "yesterdays_price": "₹2,100 / quintal",
+    "trend": "UP (+2.3%)",
+    "last_updated": "Today, 08:45 AM (Offline Data)"
+  }
+]
